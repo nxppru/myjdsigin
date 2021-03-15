@@ -1,5 +1,5 @@
 # File: .github/workflows/repo-sync.yml
-name: A🔄自动同步🔄A
+name: 同步
 on:
   schedule:
     - cron: '0 */1 * * *'
@@ -20,11 +20,11 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: 开始🔄自动同步🔄
+      - name: 开始同步
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
           source_repo: "https://github.com/nxppru/myjdsigin.git"
           source_branch: "master"
-          destination_branch: "main"
+          destination_branch: "actions"
           github_token: ${{ github.event.client_payload.PAT || secrets.PAT }}
