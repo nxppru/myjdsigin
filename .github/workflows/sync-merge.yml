@@ -1,4 +1,4 @@
-name: sync + merge
+name: 同步&合并
 on:
   schedule:
     - cron: '30 0-15/3 * * *'
