@@ -26,7 +26,7 @@ jobs:
       - name: git-sync gitee/lxk0301/jd_scripts.git to github with private key
         uses: wei/git-sync@v3
         with:
-          source_repo: "git@gitee.com:lxk0301/jd_scripts.git"
+          source_repo: "git@jd_scripts_gitee:lxk0301/jd_scripts.git"
           source_branch: "master"
           destination_repo: "nxppru/myjdsigin"
           destination_branch: "master"
