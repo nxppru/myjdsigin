@@ -10,7 +10,7 @@ function jddj(){
     rm -rf /scripts/jddj && git clone https://github.com/passerby-b/JDDJ.git /scripts/jddj
     # 下载自定义cookie文件地址,如私密的gist地址,需修改
     jddj_cookiefile="https://gist.githubusercontent.com/nxppru/460f08137a1e626ee5f125afbcf1ebc8/raw/fcf15268aab5260f8bd577020e462da36949a59e/jddj_cookie.js"
-    #curl -so /scripts/jddj/jddj_cookie.js $jddj_cookiefile
+    curl -so /scripts/jddj/jddj_cookie.js $jddj_cookiefile
     # 下载cookie文件失败时从备份恢复
     test $? -eq 0 || cp -rf /scripts/jddj/backup_jddj_cookie.js /scripts/logs/backup_jddj_cookie.js
     # 获取js文件中cron字段设置定时任务
