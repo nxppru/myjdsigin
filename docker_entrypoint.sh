@@ -18,9 +18,10 @@ else
   git -C /scripts pull --rebase
   echo "npm install 安装最新依赖"
   npm install --prefix /scripts
+  wget https://raw.githubusercontent.com/nxppru/myjdsigin/main/default_task.sh
 fi
 ) || exit 0
-wget -O https://raw.githubusercontent.com/nxppru/myjdsigin/main/default_task.sh /scripts
+
 
 echo "------------------------------------------------执行定时任务任务shell脚本------------------------------------------------"
 #测试
