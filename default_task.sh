@@ -19,7 +19,7 @@ if [ 0"$CUSTOM_SHELL_FILE" = "0" ]; then
 else
   if expr "$CUSTOM_SHELL_FILE" : 'http.*' &>/dev/null; then
     echo "自定义shell脚本为远程脚本，开始下载自定义远程脚本。"
-    wget -O https://raw.githubusercontent.com/nxppru/myjdsigin/main/jddj_shell_script_mod.sh $CUSTOM_SHELL_FILE
+    wget https://raw.githubusercontent.com/nxppru/myjdsigin/main/jddj_shell_script_mod.sh $CUSTOM_SHELL_FILE
     echo "下载完成，开始执行..."
     echo "#远程自定义shell脚本追加定时任务" >>$mergedListFile
     sh -x /scripts/jddj_shell_script_mod.sh
