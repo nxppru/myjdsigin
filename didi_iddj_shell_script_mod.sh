@@ -22,20 +22,9 @@ function jddj(){
 }
 
 function didi_fruit(){
-    # https://github.com/passerby-b/didi_fruit.git
-    rm -rf /didi_fruit /scripts/didi_*
-    git clone -b main https://github.com/passerby-b/didi_fruit.git /didi_fruit
-    for jsname in $(ls /didi_fruit | grep -oE ".*\js$"); do cp -rf /didi_fruit/$jsname /scripts/jddj/didi_$jsname; done
-}
-
-function diycron(){
-    # didi_fruit 定时任务
-    for jsname in /scripts/jddj/didi_*.js; do
-        jsnamecron="$(cat $jsname | grep -oE "/?/?cron \".*\"" | cut -d\" -f2)"
-        test -z "$jsnamecron" || echo "$jsnamecron node $jsname >> /scripts/logs/$(echo $jsname | cut -d/ -f3).log 2>&1" >> /scripts/docker/merged_list_file.sh
-    done
-    # 启用京价保
-    echo "39 0,23 * * * node /scripts/jd_price.js >> /scripts/logs/jd_price.log 2>&1" >> /scripts/docker/merged_list_file.sh
+    # https://raw.githubusercontent.com/passerby-b/didi_fruit/main/dd_fruit.js
+    wget -qO /scripts/jddj/dd_fruit.js https://raw.githubusercontent.com/passerby-b/didi_fruit/main/dd_fruit.js
+    echo "10 0,8,12,18 * * * node /scripts/jddj/dd_fruit.js >> /scripts/logs/dd_fruit.js.log 2>&1" >> /scripts/docker/merged_list_file.sh
 }
 
 function main(){
@@ -48,8 +37,6 @@ function main(){
     didi_fruit
     b_jsnum=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | wc -l)
     b_jsname=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | grep -oE "[^ ]*js$")
-    # DIY任务
-    diycron
     # DIY脚本更新TG通知
     info_more=$(echo $a_jsname  $b_jsname | tr " " "\n" | sort | uniq -c | grep -oE "1 .*$" | grep -oE "[^ ]*js$" | tr "\n" " ")
     [[ "$a_jsnum" == "0" || "$a_jsnum" == "$b_jsnum" ]] || curl -sX POST "https://api.telegram.org/bot$TG_BOT_TOKEN/sendMessage" -d "chat_id=$TG_USER_ID&text=DIY脚本更新完成：$a_jsnum $b_jsnum $info_more" >/dev/null
