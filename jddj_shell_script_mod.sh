@@ -21,10 +21,11 @@ function jddj(){
     done
 }
 
-function ddgy(){
-    # https://raw.githubusercontent.com/passerby-b/didi_fruit/main/dd_fruit.js
-    wget -qO /scripts/jddj/dd_fruit.js https://raw.githubusercontent.com/passerby-b/didi_fruit/main/dd_fruit.js
-    echo "0 8,12,18 * * * node /scripts/jddj/dd_fruit.js >> /scripts/logs/dd_fruit.js.log 2>&1" >> /scripts/docker/merged_list_file.sh
+function nianyuguai(){
+    # https://github.com/passerby-b/didi_fruit.git
+    rm -rf /didi_fruit /scripts/didi_fruit_*
+    git clone -b main https://github.com/passerby-b/didi_fruit.git /didi_fruit
+    for jsname in $(ls /didi_fruit | grep -oE ".*\js$"); do cp -rf /didi_fruit/$jsname /scripts/didi_fruit_$jsname; done
 }
 
 function main(){
