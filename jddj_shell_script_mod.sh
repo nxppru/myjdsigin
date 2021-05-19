@@ -21,7 +21,7 @@ function jddj(){
     done
 }
 
-function didi_fruit(){
+function didi(){
     # https://github.com/passerby-b/didi_fruit.git
     rm -rf /didi_fruit /scripts/didi_fruit_*
     git clone -b main https://github.com/passerby-b/didi_fruit.git /didi_fruit
