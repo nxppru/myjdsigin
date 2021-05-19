@@ -28,12 +28,6 @@ function didi(){
     for jsname in $(ls /didi_fruit | grep -oE ".*\js$"); do cp -rf /didi_fruit/$jsname /scripts/didi_fruit_$jsname; done
 }
 
-function dd_fruit(){
-    # https://raw.githubusercontent.com/passerby-b/didi_fruit/main/dd_fruit.js
-    wget -qO /scripts/dd_fruit.js https://raw.githubusercontent.com/passerby-b/didi_fruit/main/dd_fruit.js
-    echo "10 0,8,12,18 * * * node /scripts/dd_fruit.js >> /scripts/logs/dd_fruit.js.log 2>&1" >> /scripts/docker/merged_list_file.sh
-}
-
 function main(){
     # 首次运行时拷贝docker目录下文件
     [[ ! -d /jd_diy ]] && mkdir /jd_diy && cp -rf /scripts/docker/* /jd_diy
@@ -41,7 +35,7 @@ function main(){
     a_jsnum=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | wc -l)
     a_jsname=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | grep -oE "[^ ]*js$")
     jddj
-    didi_fruit
+    didi
     b_jsnum=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | wc -l)
     b_jsname=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | grep -oE "[^ ]*js$")
     # DIY脚本更新TG通知
