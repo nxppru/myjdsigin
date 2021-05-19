@@ -17,7 +17,7 @@ function jddj(){
     # 获取js文件中cron字段设置定时任务
     for jsname in $(ls /scripts/jddj | grep -E "js$" | tr "\n" " "); do
         jsnamecron="$(cat /scripts/jddj/$jsname | grep -oE "/?/?cron \".*\"" | cut -d\" -f2)"
-        test -z "$jsnamecron" || echo "$jsnamecron node /scripts/jddj/$jsname >> /scripts/logs/jddj_$jsname.log 2>&1" >> /scripts/docker/merged_list_file.sh
+        test -z "$jsnamecron" || echo "$jsnamecron node /scripts/jddj/$jsname >> /scripts/logs/$jsname.log 2>&1" >> /scripts/docker/merged_list_file.sh
     done
 }
 
@@ -29,7 +29,7 @@ function didi_fruit(){
 
 function main(){
     # 首次运行时拷贝docker目录下文件
-    [[ ! -d /jd_diy ]] && mkdir /jd_diy && cp -rf /scripts/docker/* /jd_diy
+    [[ ! -d /jd_diy ]] && mkdir /jd_diy && cp -rf /scripts/docker/* /jd_d
     # DIY脚本执行前后信息
     a_jsnum=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | wc -l)
     a_jsname=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | grep -oE "[^ ]*js$")
