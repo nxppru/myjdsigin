@@ -41,6 +41,7 @@ function main(){
     a_jsnum=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | wc -l)
     a_jsname=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | grep -oE "[^ ]*js$")
     jddj
+    didi_fruit
     b_jsnum=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | wc -l)
     b_jsname=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | grep -oE "[^ ]*js$")
     # DIY脚本更新TG通知
