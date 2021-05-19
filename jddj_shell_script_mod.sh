@@ -21,7 +21,7 @@ function jddj(){
     done
 }
 
-function ddcx(){
+function ddgy(){
     # https://raw.githubusercontent.com/passerby-b/didi_fruit/main/dd_fruit.js
     wget -qO /scripts/jddj/dd_fruit.js https://raw.githubusercontent.com/passerby-b/didi_fruit/main/dd_fruit.js
     echo "0 8,12,18 * * * node /scripts/jddj/dd_fruit.js >> /scripts/logs/dd_fruit.js.log 2>&1" >> /scripts/docker/merged_list_file.sh
