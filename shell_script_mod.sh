@@ -25,7 +25,7 @@ function didi_fruit(){
     # https://github.com/passerby-b/didi_fruit.git
     rm -rf /didi_fruit /scripts/didi_*
     git clone -b main https://github.com/passerby-b/didi_fruit.git /didi_fruit
-    for jsname in $(ls /didi_fruit | grep -oE ".*\js$"); do cp -rf /didi_fruit/$jsname /scripts/didi_$jsname; done
+    for jsname in $(ls /didi_fruit | grep -oE ".*\js$"); do cp -rf /didi_fruit/$jsname /scripts/jddj/didi_$jsname; done
 }
 
 function main(){
