@@ -21,7 +21,7 @@ function jddj(){
     done
 }
 
-function didi(){
+function didi_fruit(){
     # https://github.com/passerby-b/didi_fruit.git
     rm -rf /didi_fruit /scripts/didi_fruit_*
     git clone -b main https://github.com/passerby-b/didi_fruit.git /didi_fruit
@@ -35,7 +35,7 @@ function main(){
     a_jsnum=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | wc -l)
     a_jsname=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | grep -oE "[^ ]*js$")
     jddj
-    didi
+    didi_fruit
     b_jsnum=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | wc -l)
     b_jsname=$(ls -l /scripts/jddj | grep -oE "^-.*js$" | grep -oE "[^ ]*js$")
     # DIY脚本更新TG通知
