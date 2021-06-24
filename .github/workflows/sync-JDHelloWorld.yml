@@ -1,4 +1,4 @@
-name: 同步chinnkarahoi
+name: 同步JDHelloWorld
 on:
   schedule:
     - cron: '0 */1 * * *'
@@ -16,7 +16,7 @@ jobs:
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "https://github.com/chinnkarahoi/jd_scripts.git"
-          source_branch: "master"
+          source_repo: "https://github.com/JDHelloWorld/jd_scripts.git"
+          source_branch: "main"
           destination_branch: "master"
           github_token: ${{ secrets.PAT }}
