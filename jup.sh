@@ -491,11 +491,7 @@ update_scripts () {
     echo -e "--------------------------------------------------------------\n"
     ## 更新前先存储package.json和githubAction.md的内容
     [ -f $dir_scripts/package.json ] && scripts_depend_old=$(cat $dir_scripts/package.json)
-    [ -f $dir_scripts/githubAction.md ] && cp -f $dir_scripts/githubAction.md $dir_list_tmp/githubAction.md
-    
-    ## 删除临时文件夹
-    cd /jd/own/ && rm -rf 849165048_Temporary-activities-Scripts
-    
+    [ -f $dir_scripts/githubAction.md ] && cp -f $dir_scripts/githubAction.md $dir_list_tmp/githubAction.md   
     if [ -d ${dir_scripts}/.git ]; then
        [ -z $JD_SCRIPTS_URL ] && [[ -z $(grep $url_scripts $dir_scripts/.git/config) ]] && rm -rf $dir_scripts
         if [[ ! -z $JD_SCRIPTS_URL ]]; then
