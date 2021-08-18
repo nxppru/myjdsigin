@@ -76,24 +76,7 @@ if [ ! -s $file_diybotset_user ]; then
     echo
 fi
 
-echo -e "======================== 4. 启动挂机程序 ========================\n"
-rm -rf /root/.pm2/logs/* >/dev/null 2>&1
-if [[ $ENABLE_HANGUP == true ]]; then
-    if [ -f $file_cookie ]; then
-        . $file_cookie
-    fi
-    . $file_config_user
-    if [[ $Cookie1 ]]; then
-        jtask hangup 2>/dev/null
-        echo -e "挂机程序启动成功...\n"
-    else
-        echo -e "$file_config_user 中还未填入有效的Cookie，可能是首次部署容器，因此不启动挂机程序...\n"
-    fi
-elif [[ ${ENABLE_HANGUP} == false ]]; then
-    echo -e "已设置为不自动启动挂机程序，跳过...\n"
-fi
-
-echo -e "======================== 5. 启动网页终端 ========================\n"
+echo -e "======================== 4. 启动网页终端 ========================\n"
 rm -rf /root/.pm2/logs/* 2>/dev/null  # 清空pm2日志
 if [[ $ENABLE_WEB_PANEL == true ]]; then
     if [[ $ENABLE_TTYD == true ]]; then
@@ -129,7 +112,7 @@ else
     echo -e "已设置为不自动启动控制面板，因此也不启动网页终端...\n"
 fi
 
-echo -e "======================== 6. 启动控制面板 ========================\n"
+echo -e "======================== 5. 启动控制面板 ========================\n"
 if [[ $ENABLE_WEB_PANEL == true ]]; then
     cd ${JD_DIR}/panel
     pm2 start ecosystem.config.js
@@ -147,7 +130,7 @@ elif [[ $ENABLE_WEB_PANEL == false ]]; then
 fi
 
 if type python3 &>/dev/null; then
-    echo -e "======================== 7. 启动Telegram Bot ========================\n"
+    echo -e "======================== 6. 启动Telegram Bot ========================\n"
     if [[ $ENABLE_TG_BOT == true ]]; then
        if [[ -z $(grep -E "123456789" $JD_DIR/config/bot.json) ]]; then
           cd $JD_DIR/jbot
@@ -172,6 +155,23 @@ if type python3 &>/dev/null; then
 #        echo -e "已设置为不自动启动Telegram Bot，跳过...\n"
 #    fi
 #fi
+
+echo -e "======================== 7. 启动挂机程序 ========================\n"
+rm -rf /root/.pm2/logs/* >/dev/null 2>&1
+if [[ $ENABLE_HANGUP == true ]]; then
+    if [ -f $file_cookie ]; then
+        . $file_cookie
+    fi
+    . $file_config_user
+    if [[ $Cookie1 ]]; then
+        jtask hangup 2>/dev/null
+        echo -e "挂机程序启动成功...\n"
+    else
+        echo -e "$file_config_user 中还未填入有效的Cookie，可能是首次部署容器，因此不启动挂机程序...\n"
+    fi
+elif [[ ${ENABLE_HANGUP} == false ]]; then
+    echo -e "已设置为不自动启动挂机程序，跳过...\n"
+fi
 
 echo -e "容器启动成功...\n"
 
