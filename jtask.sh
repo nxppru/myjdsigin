@@ -172,7 +172,7 @@ find_file_and_path () {
 
 ## 运行挂机脚本
 run_hungup () {
-    local hangup_file="jd_crazy_joy_coin"
+    local hangup_file="jd_cfd_loop"
     cd $dir_scripts
     for file in $hangup_file; do
         import_config_and_check $file
