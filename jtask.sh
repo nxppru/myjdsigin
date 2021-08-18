@@ -322,6 +322,9 @@ case $# in
             conc)
                 run_concurrent $1 $2
                 ;;
+                [1-9] | [1-2][0-9])
+                run_specify $1 $2
+                ;;
             *)
                 echo -e "\n命令输入错误...\n"
                 usage
