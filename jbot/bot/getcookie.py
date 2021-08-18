@@ -4,8 +4,9 @@ import re
 import time
 import qrcode
 from asyncio import exceptions
-from .. import jdbot, chat_id, img_file
-from .utils import press_event
+from .. import jdbot, chat_id, img_file,logger
+from ..bot.utils import press_event
+
 
 cookiemsg = ''
 # 扫码获取cookie 直接采用LOF大佬代码
@@ -30,7 +31,7 @@ def getSToken():
         'Accept': 'application/json, text/plain, */*',
         'Accept-Language': 'zh-cn',
         'Referer': 'https://plogin.m.jd.com/login/login?appid=300&returnurl=https://wq.jd.com/passport/LoginRedirect?state=%s&returnurl=https://home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&/myJd/home.action&source=wq_passport' % time_stamp,
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 SP-engine/2.14.0 main%2F1.0 baiduboxapp/11.18.0.16 (Baidu; P2 13.3.1) NABar/0.0',
         'Host': 'plogin.m.jd.com'
     }
     resp = requests.get(url=get_url, headers=get_header)
@@ -50,8 +51,8 @@ def parseGetRespCookie(headers, get_resp):
 
 def getOKLToken():
     post_time_stamp = int(time.time() * 1000)
-    post_url = 'https://plogin.m.jd.com/cgi-bin/m/tmauthreflogurl?s_token=%s&v=%s&remember=true' % (
-        s_token, post_time_stamp)
+    post_url = 'https://plogin.m.jd.com/cgi-bin/m/tmauthreflogurl?s_token=%s&v=%s&remember=true' % (s_token, post_time_stamp)
+
     post_data = {
         'lang': 'chs',
         'appid': 300,
@@ -64,7 +65,7 @@ def getOKLToken():
         'Accept': 'application/json, text/plain, */*',
         'Cookie': cookies,
         'Referer': 'https://plogin.m.jd.com/login/login?appid=300&returnurl=https://wqlogin2.jd.com/passport/LoginRedirect?state=%s&returnurl=//home.m.jd.com/myJd/newhome.action?sceneval=2&ufc=&/myJd/home.action&source=wq_passport' % post_time_stamp,
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 SP-engine/2.14.0 main%2F1.0 baiduboxapp/11.18.0.16 (Baidu; P2 13.3.1) NABar/0.0',
         'Host': 'plogin.m.jd.com',
     }
     try:
@@ -108,8 +109,35 @@ def creatqr(text):
     # 保存二维码
     img.save(img_file)
 
+async def configup(cookie):
+    '''替换修改config文件cookie'''
+    with open('/jd/config/config.sh', 'r+') as config:
+        values = config.readlines()
+    pinReg = re.compile(r'pt_pin=[\S]+;')
+    pin = re.findall(pinReg, cookie)[0]
+    cookiereg = re.compile(r'pt_key=[\S]+;'+pin)
+    cknum = re.compile(r'(?<=Cookie)[\d]+(?==")')
+    pos = []
+    newck = True
+    for value in values:
+        i = values.index(value)
+        nums = cknum.findall(value)
+        if nums:
+            pos.append(i)
+            num = nums[-1]
+        oldcookie = re.findall(cookiereg, value)
+        if oldcookie:
+            values.pop(i)
+            values.insert(i,f'Cookie{int(num)}="{cookie}"\n')
+            newck = False
+            await jdbot.send_message(chat_id,'已完成替换'+f'```{cookie}```')
+    if newck:
+        values.insert(pos[-1]+1,f'Cookie{int(num)+1}="{cookie}"\n')
+        await jdbot.send_message(chat_id,'已完成新增\n'+f'```{cookie}```')
+    with open('/jd/config/config.sh', 'w') as config:
+        config.writelines(values)
 
-@jdbot.on(events.NewMessage(from_users=chat_id, pattern=r'^/getcookie'))
+@jdbot.on(events.NewMessage(from_users=chat_id, pattern=r'^/getcookie|^扫码$'))
 async def mycookie(event):
     '''接收/getcookie后执行程序'''
     login = True
@@ -120,7 +148,7 @@ async def mycookie(event):
         async with jdbot.conversation(SENDER, timeout=30) as conv:
             getSToken()
             getOKLToken()
-            url = 'https://plogin.m.jd.com/cgi-bin/m/tmauth?appid=300&client_type=m&token='+token
+            url = f'https://plogin.m.jd.com/cgi-bin/m/tmauth?appid=300&client_type=m&token={token}'
             creatqr(url)
             markup = [Button.inline("已扫码", data='confirm'),
                       Button.inline("取消", data='cancel')]
@@ -139,8 +167,8 @@ async def mycookie(event):
         expired_time = time.time() + 60 * 2
         while login:
             check_time_stamp = int(time.time() * 1000)
-            check_url = 'https://plogin.m.jd.com/cgi-bin/m/tmauthchecktoken?&token=%s&ou_state=0&okl_token=%s' % (
-                token, okl_token)
+            check_url = 'https://plogin.m.jd.com/cgi-bin/m/tmauthchecktoken?&token=%s&ou_state=0&okl_token=%s' % (token, okl_token)
+
             check_data = {
                 'lang': 'chs',
                 'appid': 300,
@@ -153,7 +181,7 @@ async def mycookie(event):
                 'Connection': 'Keep-Alive',
                 'Content-Type': 'application/x-www-form-urlencoded; Charset=UTF-8',
                 'Accept': 'application/json, text/plain, */*',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36',
+                'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 SP-engine/2.14.0 main%2F1.0 baiduboxapp/11.18.0.16 (Baidu; P2 13.3.1) NABar/0.0',
             }
             resp = requests.post(
                 url=check_url, headers=check_header, data=check_data, timeout=30)
@@ -161,8 +189,7 @@ async def mycookie(event):
             if data.get("errcode") == 0:
                 parseJDCookies(resp.headers)
                 await jdbot.delete_messages(chat_id, cookiemsg)
-                await jdbot.send_message(chat_id, '以下为获取到的cookie')
-                await jdbot.send_message(chat_id, jd_cookie)
+                await configup(jd_cookie)
                 return
             if data.get("errcode") == 21:
                 await jdbot.delete_messages(chat_id, cookiemsg)
@@ -174,3 +201,4 @@ async def mycookie(event):
                 return
     except Exception as e:
         await jdbot.send_message(chat_id, 'something wrong,I\'m sorry\n'+str(e))
+        logger.error('something wrong,I\'m sorry\n'+str(e))
