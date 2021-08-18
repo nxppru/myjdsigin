@@ -269,29 +269,6 @@ run_concurrent () {
     fi
 }
 
-## 指定只运行某一个Cookie
-run_specify () {
-    local p=$1
-    local ck_num=$2
-    find_file_and_path $p
-    if [[ $file_name ]] && [[ $which_path ]]; then
-        import_config_and_check "$file_name"
-        update_crontab
-        count_user_sum
-        export_all_env $ck_num
-        [[ $user_sum -ge 5000 ]] && rm -rf $dir_config/* &>/dev/null
-        make_dir $dir_log/$file_name
-        log_time=$(date "+%Y-%m-%d-%H-%M-%S")
-        log_path="$dir_log/$file_name/${log_time}_${ck_num}.log"
-        cd $which_path
-        node $file_name.js 2>&1 | tee $log_path
-        run_task_finish "$file_name" 2>&1 | tee -a $log_path
-    else
-        echo -e "\n $p 脚本不存在，请确认...\n"
-        usage
-    fi
-}
-
 ## 命令检测
 case $# in
     0)
@@ -321,9 +298,6 @@ case $# in
                 ;;
             conc)
                 run_concurrent $1 $2
-                ;;
-                [1-9] | [1-2][0-9])
-                run_specify $1 $2
                 ;;
             *)
                 echo -e "\n命令输入错误...\n"
