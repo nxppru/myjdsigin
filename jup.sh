@@ -506,6 +506,11 @@ update_scripts () {
     url_scripts=${JD_SCRIPTS_URL:-https://ghproxy.com/https://github.com/Aaron-lv/sync.git}
     branch_scripts=${JD_SCRIPTS_BRANCH:-jd_scripts}
 
+    ## 备份node依赖
+    cp -r /jd/scripts/node_modules /jd
+    ## 删除本地文件
+    cd /jd/scripts && rm -rf * .git*
+
     ## 更新或克隆scripts
     if [ -d $dir_scripts/.git ]; then
         git_pull_scripts $dir_scripts 
@@ -515,6 +520,9 @@ update_scripts () {
 
     if [[ $exit_status -eq 0 ]]; then
         echo -e "\n更新$dir_scripts成功...\n"
+
+    ## 恢复node依赖
+    cp -r /jd/node_modules /jd/scripts
 
         ## npm install
         [ ! -d $dir_scripts/node_modules ] && npm_install_1 $dir_scripts
