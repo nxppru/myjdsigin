@@ -492,6 +492,13 @@ update_scripts () {
     ## 更新前先存储package.json和githubAction.md的内容
     [ -f $dir_scripts/package.json ] && scripts_depend_old=$(cat $dir_scripts/package.json)
     [ -f $dir_scripts/githubAction.md ] && cp -f $dir_scripts/githubAction.md $dir_list_tmp/githubAction.md   
+    
+    ## 备份node依赖
+    cp -r /jd/scripts/node_modules /jd
+    
+    ## 删除本地文件
+    cd /jd/scripts && rm -rf * .git*
+    
     if [ -d ${dir_scripts}/.git ]; then
        [ -z $JD_SCRIPTS_URL ] && [[ -z $(grep $url_scripts $dir_scripts/.git/config) ]] && rm -rf $dir_scripts
         if [[ ! -z $JD_SCRIPTS_URL ]]; then
@@ -505,11 +512,6 @@ update_scripts () {
 
     url_scripts=${JD_SCRIPTS_URL:-https://github.com/Aaron-lv/sync.git}
     branch_scripts=${JD_SCRIPTS_BRANCH:-jd_scripts}
-
-    ## 备份node依赖
-    cp -r /jd/scripts/node_modules /jd
-    ## 删除本地文件
-    cd /jd/scripts && rm -rf * .git*
 
     ## 更新或克隆scripts
     if [ -d $dir_scripts/.git ]; then
