@@ -67,6 +67,7 @@
         && cnpm i -g typescript  \
         && cnpm i -g ts-node \
 	&& npm install crypto -g \
+	&& npm install -g agentkeepalive \
         && npm install -g npm \
         && npm install -g vue-cli \
         && pip3 install requests
