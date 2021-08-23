@@ -1,4 +1,4 @@
-# 京东领现金
+# lxj
 # Author:ddo
 # update time:2021/8/18
 import urllib
