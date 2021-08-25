@@ -1,7 +1,7 @@
 /*
 [task_local]
 #京东资产变动通知
-30 8,20 * * * https://raw.githubusercontent.com/849165048/Scripts/main/jd_bean_change_Mod2.js , tag=京东资产变动通知,
+32 8,20 * * * https://raw.githubusercontent.com/849165048/Scripts/main/jd_bean_change_Mod2.js , tag=京东资产变动通知,
 */
 
 
