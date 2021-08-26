@@ -12,7 +12,7 @@ cron "10 9 * * *" script-path=https://raw.githubusercontent.com/jiulan/platypus/
 ===================================Surge================================
 京东月资产变动通知 = type=cron,cronexp="10 9 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_all_bean_change.js
 ====================================小火箭=============================
-京东月资产变动通知 = type=cron,script-path=https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_all_bean_change.js, cronexpr="10 27 * * *", timeout=3600, enable=true
+京东月资产变动通知 = type=cron,script-path=https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_all_bean_change.js, cronexpr="10 9 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东月资产变动通知');
 const notify = $.isNode() ? require('./sendNotify') : '';
