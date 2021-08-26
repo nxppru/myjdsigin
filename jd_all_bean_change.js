@@ -5,7 +5,7 @@
 =================================Quantumultx=========================
 [task_local]
 #京东月资产变动通知
-10 27 * * * https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_all_bean_change.js, tag=京东月资产变动通知, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+10 9,21 * * * https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_all_bean_change.js, tag=京东月资产变动通知, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 =================================Loon===================================
 [Script]
 cron "10 27 * * *" script-path=https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_all_bean_change.js,tag=京东月资产变动通知
