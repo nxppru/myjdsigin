@@ -2,7 +2,7 @@
 const QYWX_KEY = '' || process.env.QYWX_KEY;
 const QYWX_AM = '' || process.env.QYWX_AM;
 const UPDATE_API = 'http:\\127.0.0.1:5678/updateCookie' || process.env.UPDATE_API;
-const JD_UA = 'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 14_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/91.0.4472.80 Mobile/15E148 Safari/604.1'
+const JD_UA = 'User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 14_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148'
  
 const express = require('express');
 const got = require('got');
