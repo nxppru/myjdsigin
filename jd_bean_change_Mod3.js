@@ -1,5 +1,5 @@
 /*
-cron "33 8,20 * * *" jd_bean_change_Mod3.js, tag:资产变化强化版by-ccwav
+cron "32 8,20 * * *" jd_bean_change_Mod3.js, tag:资产变化强化版by-ccwav
 */
 
 //更新by ccwav,20210821
