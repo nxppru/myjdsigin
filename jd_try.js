@@ -33,7 +33,7 @@ let args_xh = {
      * */
 //     isNotify: process.env.JD_TRY_NOTIFY || true,
     // 商品原价，低于这个价格都不会试用
-    jdPrice: process.env.JD_TRY_PRICE || 0,
+    jdPrice: process.env.JD_TRY_PRICE || 50,
     /*
      * 获取试用商品类型，默认为1
      * 1 - 精选
@@ -44,13 +44,13 @@ let args_xh = {
      * 可设置环境变量：JD_TRY_TABID
      * */
     // TODO: tab ids as array(support multi tabIds)
-    // tabId: process.env.JD_TRY_TABID && process.env.JD_TRY_TABID.split('@').map(Number) || [1],
-    tabId: process.env.JD_TRY_TABID || 1,
+    tabId: process.env.JD_TRY_TABID && process.env.JD_TRY_TABID.split('@').map(Number) || ["1","2","3","4","5"],
+    // tabId: process.env.JD_TRY_TABID || 1,
     /*
      * 试用商品标题过滤
      * 可设置环境变量：JD_TRY_TITLEFILTERS，关键词与关键词之间用@分隔
      * */
-    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["幼儿园", "教程", "英语", "辅导", "培训", "孩子", "小学"],
+    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["软件", "教程", "英语", "辅导", "培训", "孩子", "小学"],
     // 试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用
     trialPrice: 10,
     /*
@@ -75,7 +75,7 @@ let args_xh = {
      * 例如是18件，将会进行第三次获取，直到过滤完毕后为20件才会停止，不建议设置太大
      * 可设置环境变量：JD_TRY_MAXLENGTH
      * */
-    maxLength: process.env.JD_TRY_MAXLENGTH || 20
+    maxLength: process.env.JD_TRY_MAXLENGTH || 30
 }
 
 !(async() => {
