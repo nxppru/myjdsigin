@@ -1,5 +1,5 @@
 /*
-cron "*/20 * * * *" jd_ckcheck.js, tag:Cookie检测
+cron "0 * * * *" jd_ckcheck.js, tag:Cookie检测
 */
 
 const $ = new Env('Cookie检测');
