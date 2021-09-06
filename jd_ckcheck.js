@@ -1,6 +1,6 @@
 /*
 cron "*/20 * * * *" jd_ckcheck.js, tag:Cookie检测
- */
+*/
 
 const $ = new Env('Cookie检测');
 const notify = $.isNode() ? require('./sendNotify') : '';
