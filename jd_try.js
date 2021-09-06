@@ -18,7 +18,7 @@
  * 请提前取关至少250个商店确保京东试用脚本正常运行
  * 没有写通知，是否申请成功没有进行通知，但脚本会把状态log出日志
  *
- cron "0 6 * * *" jd_try.js, tag:京东试用
+ cron "30 */6 * * *" jd_try.js, tag:京东试用
  */
 const $ = new Env('京东试用')
 const URL = 'https://api.m.jd.com/client.action'
