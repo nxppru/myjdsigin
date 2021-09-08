@@ -9,7 +9,7 @@
 ==============Quantumult X===========
 [task_local]
 #清空购物车
-55 17 * * * jd_cleancart.js, tag=清空购物车, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
+30 */6 * * * jd_cleancart.js, tag=清空购物车, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
 ===========Loon============
 [Script]
 cron "55 17 * * *" script-path=jd_cleancart.js,tag=清空购物车
